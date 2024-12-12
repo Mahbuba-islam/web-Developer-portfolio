@@ -1,0 +1,274 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.header{
+    background-color:#FFF8F3;
+    margin: 40px 0px 0px;
+    padding: 30px 40px;
+    background-image: url(../assets/images/header_bg.png);
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    max-width: 1600px;
+   }
+
+
+.extra-bold { 
+    font-weight: 900;
+    font-size: xx-large;
+     font-family: "Open Sans", sans-serif;
+}
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+ul{
+    display: flex;
+    align-items: center;
+   
+}
+
+ul li{
+    list-style: none;
+    margin-left: 30px;
+  
+}
+
+ul a{
+    text-decoration: none;
+}
+
+.primary-color{
+    color: #FD6E0A;
+}
+
+.primary-button{
+    color: white;
+    background-color: #FD6E0A;
+    border: 0;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+
+.developer-section{
+     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-image: url(../assets/images/developer.png);
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: contain;
+
+
+  
+   
+}
+
+.profile-picture{
+     width: 584px;
+     height: 676px;
+     position: relative; 
+     top: 30px; /* Moves the image 20px down */ 
+     right: 30px; /* Moves the image 30px to the right */
+    
+    
+    
+}
+
+
+.developer-des{
+    width: 585px;
+    height: 356px;
+    margin-left: 110px;
+    padding-left: 20px;
+    
+}
+
+.developer-des>h4{
+   margin: 10px 0px;
+   
+}
+
+.paragraph{
+    width: 500px;
+    margin: 12px 0px;
+    
+  
+}
+
+.button-contact{
+    color: #FD6E0A;
+    border: 5px solid #f9bb8f ;
+    padding: 5px 10px;
+}
+
+main{
+    max-width: 1140px;
+    margin: 90px auto;
+
+}
+
+
+
+.section-container{
+    background-color: #f9f0e9fa;
+    padding: 50px 0px;
+    margin: 50px;
+
+}
+
+.about{
+    width: 860px;
+    border: 1px solid black;
+    background-color: white;
+    padding: 15px 15px;
+    margin: 5px auto;
+}
+.info-container{
+      display: flex;
+    justify-content:space-around; 
+     align-items: center;
+
+}
+
+.info {
+ text-align: center;
+
+}
+
+.info p{
+    font-weight: bolder; 
+}
+
+.section-title{
+    text-align: center;
+    font-weight: 900;
+}
+
+.section-des{
+    text-align: center;
+   margin: 10px auto;
+   width: 850px;
+}
+
+.about h1{
+    text-align: center;
+}
+
+.skills{
+    display: flex;
+    gap: 30px;
+   align-items: center;
+   justify-content: center;
+}
+
+.skill{
+    background-color: white;
+    box-shadow: 5px 5px 15px rgb(224, 208, 208);
+    height: 300px;
+    width: 190px;
+    padding: 10px 10px ;
+    
+    
+}
+
+.skill>img{
+    margin: 10px 10px;
+}
+.skill>h1,.skill>p{
+    margin: 10px 10px;
+   
+    
+}
+
+.resume-container{
+    display: flex;
+    gap: 15px;
+    /* align-items: start;
+    justify-content: center; */
+    margin: 20px auto;
+  padding: 10px 0px;
+   
+}
+
+.resume{
+    margin: 30px auto;
+}
+
+.resume>h1{
+    margin-bottom: 10px;
+}
+.experience-education>h4{
+    margin-bottom: 7px;
+    font-weight: 900;
+    font-size: 20px;
+}
+.e-place{
+    margin-bottom: 10px;
+    color: rgba(0, 0, 0, 0.677);
+    font-weight: 700;
+}
+.experience-education{
+    width: 511px;
+    padding: 10px 0px;
+   margin: 5px 0px;
+    text-align: start;
+}
+
+.resume-button{
+   margin: 30px auto;
+text-align: center;
+   
+}
+footer{
+    background-color: #f9bb8f;
+    max-width: 1600px;
+    max-height: 780px;
+    padding: 100px 0px;
+
+  
+}
+.connect-container{
+    display: flex;
+   justify-content: center;
+   margin: auto auto;
+   gap: 100px;
+  
+ 
+   
+}
+
+
+
+.connect>p{
+    margin: 10px auto;
+    width: 500px;
+}
+
+
+form>input{
+   display:block;
+   margin: 10px 0px;
+   padding: 5px 5px;
+    width: 300px;
+    border: none;
+    border-radius: 2px;
+
+}
+
+form>textarea{
+    padding: 5px 5px;
+    width: 300px;
+    border: none;
+    border-radius: 2px;
+}
+
+#submit-button{
+    width: 100px;
+}
