@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Result App</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📚 Student Results</h1>
+      <div class="controls">
+        <input type="text" id="searchInput" placeholder="Search by name or ID" />
+        <select id="gradeFilter">
+          <option value="">All Grades</option>
+          <option value="A+">A+</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="Fail">Fail</option>
+        </select>
+      </div>
+    </header>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Subject</th>
+          <th>Grade</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="studentTable">
+        <!-- Sample row -->
+       
+      </tbody>
+    </table>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+const students = [
+  { id: "S001", name: "Mahbuba Rahman", subject: "Math", grade: "A+" },
+  { id: "S002", name: "John Doe", subject: "Science", grade: "B" },
+  { id: "S003", name: "Emily Zhang", subject: "English", grade: "A" },
+  { id: "S004", name: "Ali Khan", subject: "Math", grade: "C" },
+  { id: "S005", name: "Sofia Martinez", subject: "History", grade: "A+" },
+  { id: "S006", name: "David Lee", subject: "Physics", grade: "Fail" },
+  { id: "S007", name: "Fatima Noor", subject: "Chemistry", grade: "B" },
+  { id: "S008", name: "James Smith", subject: "Biology", grade: "A" },
+  { id: "S009", name: "Linda Park", subject: "Geography", grade: "C" },
+  { id: "S010", name: "Mohammed Abbas", subject: "Math", grade: "A+" }
+];
+
+const studentsContainer = document.getElementById('studentTable')
+
+
+const showAllStudents = () => {
+      students.forEach(student => {
+        console.log(student)
+        const tr = document.createElement('tr')
+        tr.innerHTML = `<td>${student.id}</td>
+          <td>${student.name}</td>
+          <td>${student.subject}</td>
+          <td>${student.grade}</td>
+          <td class="action-cell">
+            <i class="fas fa-edit edit-icon"></i>
+            <i class="delete fas fa-trash delete-icon"></i>
+          </td>`
+          studentsContainer.appendChild(tr)
+    })
+}
+showAllStudents()
+
+// studentsContainer.addEventListener('click', (e)=> {
+//     console.log(e.target)
+//     const classType = e.target.className
+//     const student = e.target.closest('tr')
+//     const currentName = student.children[1]
+   
+//     // const classType = e.target.className
+//     // console.log(classType)
+//     if(classType === 'fas fa-edit edit-icon'){
+//         console.log('fa-edit')
+//      const newName = prompt('edit the student name:',  currentName.innerText)
+//      if(newName.innerText !== null && newName.trim() !== ''){
+//       currentName.innerText =newName
+//      }
+     
+//     }
+//     // if(classType === 'fa-delete'){
+//     //  console.log('fa-delete')
+//     // }
+// })
+
+studentsContainer.addEventListener('click', (e) => {
+  const clicked = e.target;
+
+  if (clicked.classList.contains('edit-icon')) {
+   const row = clicked.closest('tr')
+   const cells = row.querySelectorAll('td')
+   for(let i=0 ; i<cells.length-1 ; i++){
+    const cell = cells[i]
+    const originalText = cell.innerText
+    const input = document.createElement('input')
+    input.type = 'text'
+    input.className = 'inline-editor'
+    input.value = originalText
+    cell.innerText = ''
+    cell.appendChild(input);
+   
+    input.addEventListener('blur', () => {
+    const newValue = input.value.trim()
+    //  restore original if empty or unchanged
+    const finalText = cell.innerText = newValue === '' || newValue === originalText ? originalText : newValue
+    cell.innerText = finalText
+      
+    })
+   }
+  }
+});
