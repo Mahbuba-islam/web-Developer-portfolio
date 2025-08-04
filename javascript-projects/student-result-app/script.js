@@ -14,13 +14,19 @@ const students = [
 const studentsContainer = document.getElementById('studentTable')
 const searchInput = document.getElementById('searchInput')
 
-const showAllStudents = (students) => {
+const showAllStudents = (students, searchValue) => {
    studentsContainer.innerHTML = ''
-      students.forEach(student => {
+   students.forEach(student => {
         console.log(student)
+        const highlightedName = student.name.replace(new RegExp(searchValue, 'gi'), match=> `<mark>${match}</mark>`)
+//        const highlightedName = student.name.replace(
+//   new RegExp(searchValue, 'gi'),
+//   match => `<mark>${match}</mark>`
+// );
+
         const tr = document.createElement('tr')
         tr.innerHTML = `<td>${student.id}</td>
-          <td>${student.name}</td>
+          <td>${highlightedName}</td>
           <td>${student.subject}</td>
           <td>${student.grade}</td>
           <td class="action-cell">
@@ -103,13 +109,24 @@ const deleteStudentInfo = (clicked) => {
 //  filtered for search functionality
 searchInput.addEventListener('input', (e) => {
  const searchValue = e.target.value.toLowerCase()
- console.log(searchValue)
- const filteredStudents = students.filter(student => {
+const filteredStudents = students.filter(student => {
   const studentId = student.id.toLowerCase()
   const studentName = student.name.toLowerCase()
  return studentId.includes(searchValue) || studentName.includes(searchValue)
  
   
  })
+ showAllStudents(filteredStudents, searchValue)
+})
+
+document.getElementById('gradeFilter').addEventListener('change', (e) => {
+ const selectedGrade = e.target.value
+ console.log(selectedGrade)
+ const filteredStudents = selectedGrade ? students.filter(student => student.grade===selectedGrade) 
+ : students
  showAllStudents(filteredStudents)
 })
+
+
+
+
