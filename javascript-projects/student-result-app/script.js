@@ -128,5 +128,33 @@ document.getElementById('gradeFilter').addEventListener('change', (e) => {
 })
 
 
+// add students
+document.getElementById('addStudentForm').addEventListener('submit', (e) => {
+  e.preventDefault()
+  const studentId = document.getElementById('studentId').value.trim()
+  const studentName = document.getElementById('studentName').value.trim()
+  const studentSubject= document.getElementById('subject').value.trim()
+  const studentGrade = document.getElementById('grade').value.trim()
+  const student = {
+    id:studentId,
+    name:studentName,
+    subject:studentSubject,
+    grade:studentGrade
+  }
+  students.push(student)
+  console.log(studentId,studentGrade,studentName,studentSubject)
+  const tr = document.createElement('tr')
+  tr.innerHTML = `<td>${student.id}</td>
+          <td>${student.name}</td>
+          <td>${student.subject}</td>
+          <td>${student.grade}</td>
+          <td class="action-cell">
+            <i class="fas fa-edit edit-icon"></i>
+            <i class="delete fas fa-trash delete-icon"></i>
+          </td>`
+          
+          studentsContainer.appendChild(tr)
+  document.getElementById('addStudentForm').reset()
+})
 
 
