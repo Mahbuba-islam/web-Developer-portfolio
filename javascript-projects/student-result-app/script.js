@@ -12,9 +12,10 @@ const students = [
 ];
 
 const studentsContainer = document.getElementById('studentTable')
+const searchInput = document.getElementById('searchInput')
 
-
-const showAllStudents = () => {
+const showAllStudents = (students) => {
+   studentsContainer.innerHTML = ''
       students.forEach(student => {
         console.log(student)
         const tr = document.createElement('tr')
@@ -29,7 +30,7 @@ const showAllStudents = () => {
           studentsContainer.appendChild(tr)
     })
 }
-showAllStudents()
+showAllStudents(students)
 
 // studentsContainer.addEventListener('click', (e)=> {
 //     console.log(e.target)
@@ -56,7 +57,21 @@ studentsContainer.addEventListener('click', (e) => {
   const clicked = e.target;
 
   if (clicked.classList.contains('edit-icon')) {
-   const row = clicked.closest('tr')
+ editStudentInfo(clicked)
+  }
+
+
+  if(clicked.classList.contains('delete-icon')){
+    deleteStudentInfo(clicked)
+  }
+
+
+});
+
+
+
+const editStudentInfo = (clicked) => {
+  const row = clicked.closest('tr')
    const cells = row.querySelectorAll('td')
    for(let i=0 ; i<cells.length-1 ; i++){
     const cell = cells[i]
@@ -76,5 +91,25 @@ studentsContainer.addEventListener('click', (e) => {
       
     })
    }
-  }
-});
+}
+
+
+// delete
+const deleteStudentInfo = (clicked) => {
+  const studentContainer = clicked.closest('tr')
+  studentContainer.remove()
+}
+  
+//  filtered for search functionality
+searchInput.addEventListener('input', (e) => {
+ const searchValue = e.target.value.toLowerCase()
+ console.log(searchValue)
+ const filteredStudents = students.filter(student => {
+  const studentId = student.id.toLowerCase()
+  const studentName = student.name.toLowerCase()
+ return studentId.includes(searchValue) || studentName.includes(searchValue)
+ 
+  
+ })
+ showAllStudents(filteredStudents)
+})
