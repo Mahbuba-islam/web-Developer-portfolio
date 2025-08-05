@@ -1,3 +1,4 @@
+// Data
 const students = [
   { id: "S001", name: "Mahbuba Rahman", subject: "Math", grade: "A+" },
   { id: "S002", name: "John Doe", subject: "Science", grade: "B" },
@@ -11,150 +12,137 @@ const students = [
   { id: "S010", name: "Mohammed Abbas", subject: "Math", grade: "A+" }
 ];
 
-const studentsContainer = document.getElementById('studentTable')
-const searchInput = document.getElementById('searchInput')
+//  DOM Elements
+const studentsContainer = document.getElementById('studentTable');
+const searchInput = document.getElementById('searchInput');
+const gradeFilter = document.getElementById('gradeFilter');
+const sortByDropdown = document.getElementById('sortBy');
+const addStudentForm = document.getElementById('addStudentForm');
 
-const showAllStudents = (students, searchValue) => {
-   studentsContainer.innerHTML = ''
-   students.forEach(student => {
-        console.log(student)
-        const highlightedName = student.name.replace(new RegExp(searchValue, 'gi'), match=> `<mark>${match}</mark>`)
-//        const highlightedName = student.name.replace(
-//   new RegExp(searchValue, 'gi'),
-//   match => `<mark>${match}</mark>`
-// );
+//  Display Students
+const showAllStudents = (students, searchValue = '') => {
+  studentsContainer.innerHTML = '';
+  students.forEach(student => {
+    const highlightedName = student.name.replace(
+      new RegExp(searchValue, 'gi'),
+      match => `<mark>${match}</mark>`
+    );
 
-        const tr = document.createElement('tr')
-        tr.innerHTML = `<td>${student.id}</td>
-          <td>${highlightedName}</td>
-          <td>${student.subject}</td>
-          <td>${student.grade}</td>
-          <td class="action-cell">
-            <i class="fas fa-edit edit-icon"></i>
-            <i class="delete fas fa-trash delete-icon"></i>
-          </td>`
-          studentsContainer.appendChild(tr)
-    })
-}
-showAllStudents(students)
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${student.id}</td>
+      <td>${highlightedName}</td>
+      <td>${student.subject}</td>
+      <td>${student.grade}</td>
+      <td class="action-cell">
+        <i class="fas fa-edit edit-icon"></i>
+        <i class="delete fas fa-trash delete-icon"></i>
+      </td>
+    `;
+    studentsContainer.appendChild(tr);
+  });
+};
 
-// studentsContainer.addEventListener('click', (e)=> {
-//     console.log(e.target)
-//     const classType = e.target.className
-//     const student = e.target.closest('tr')
-//     const currentName = student.children[1]
-   
-//     // const classType = e.target.className
-//     // console.log(classType)
-//     if(classType === 'fas fa-edit edit-icon'){
-//         console.log('fa-edit')
-//      const newName = prompt('edit the student name:',  currentName.innerText)
-//      if(newName.innerText !== null && newName.trim() !== ''){
-//       currentName.innerText =newName
-//      }
-     
-//     }
-//     // if(classType === 'fa-delete'){
-//     //  console.log('fa-delete')
-//     // }
-// })
+//  Inline Edit
+const editStudentInfo = (clicked) => {
+  const row = clicked.closest('tr');
+  const cells = row.querySelectorAll('td');
+  for (let i = 0; i < cells.length - 1; i++) {
+    const cell = cells[i];
+    const originalText = cell.innerText;
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'inline-editor';
+    input.value = originalText;
+    cell.innerText = '';
+    cell.appendChild(input);
 
-studentsContainer.addEventListener('click', (e) => {
-  const clicked = e.target;
-
-  if (clicked.classList.contains('edit-icon')) {
- editStudentInfo(clicked)
+    input.addEventListener('blur', () => {
+      const newValue = input.value.trim();
+      const finalText = newValue === '' || newValue === originalText ? originalText : newValue;
+      cell.innerText = finalText;
+    });
   }
+};
 
+//  Delete Student
+const deleteStudentInfo = (clicked) => {
+  const studentContainer = clicked.closest('tr');
+  studentContainer.remove();
+};
 
-  if(clicked.classList.contains('delete-icon')){
-    deleteStudentInfo(clicked)
-  }
-
-
+//  Search Functionality
+searchInput.addEventListener('input', (e) => {
+  const searchValue = e.target.value.toLowerCase();
+  const filteredStudents = students.filter(student =>
+    student.id.toLowerCase().includes(searchValue) ||
+    student.name.toLowerCase().includes(searchValue)
+  );
+  showAllStudents(filteredStudents, searchValue);
 });
 
+//  Grade Filter
+gradeFilter.addEventListener('change', (e) => {
+  const selectedGrade = e.target.value;
+  const filteredStudents = selectedGrade
+    ? students.filter(student => student.grade === selectedGrade)
+    : students;
+  showAllStudents(filteredStudents);
+});
 
+//  Add Student
+addStudentForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const studentId = document.getElementById('studentId').value.trim();
+  const studentName = document.getElementById('studentName').value.trim();
+  const studentSubject = document.getElementById('subject').value.trim();
+  const studentGrade = document.getElementById('grade').value.trim();
 
-const editStudentInfo = (clicked) => {
-  const row = clicked.closest('tr')
-   const cells = row.querySelectorAll('td')
-   for(let i=0 ; i<cells.length-1 ; i++){
-    const cell = cells[i]
-    const originalText = cell.innerText
-    const input = document.createElement('input')
-    input.type = 'text'
-    input.className = 'inline-editor'
-    input.value = originalText
-    cell.innerText = ''
-    cell.appendChild(input);
-   
-    input.addEventListener('blur', () => {
-    const newValue = input.value.trim()
-    //  restore original if empty or unchanged
-    const finalText = cell.innerText = newValue === '' || newValue === originalText ? originalText : newValue
-    cell.innerText = finalText
-      
-    })
-   }
-}
-
-
-// delete
-const deleteStudentInfo = (clicked) => {
-  const studentContainer = clicked.closest('tr')
-  studentContainer.remove()
-}
-  
-//  filtered for search functionality
-searchInput.addEventListener('input', (e) => {
- const searchValue = e.target.value.toLowerCase()
-const filteredStudents = students.filter(student => {
-  const studentId = student.id.toLowerCase()
-  const studentName = student.name.toLowerCase()
- return studentId.includes(searchValue) || studentName.includes(searchValue)
- 
-  
- })
- showAllStudents(filteredStudents, searchValue)
-})
-
-document.getElementById('gradeFilter').addEventListener('change', (e) => {
- const selectedGrade = e.target.value
- console.log(selectedGrade)
- const filteredStudents = selectedGrade ? students.filter(student => student.grade===selectedGrade) 
- : students
- showAllStudents(filteredStudents)
-})
-
-
-// add students
-document.getElementById('addStudentForm').addEventListener('submit', (e) => {
-  e.preventDefault()
-  const studentId = document.getElementById('studentId').value.trim()
-  const studentName = document.getElementById('studentName').value.trim()
-  const studentSubject= document.getElementById('subject').value.trim()
-  const studentGrade = document.getElementById('grade').value.trim()
   const student = {
-    id:studentId,
-    name:studentName,
-    subject:studentSubject,
-    grade:studentGrade
+    id: studentId,
+    name: studentName,
+    subject: studentSubject,
+    grade: studentGrade
+  };
+
+  students.push(student);
+  showAllStudents(students);
+  addStudentForm.reset();
+});
+
+//  Sort Students
+sortByDropdown.addEventListener('change', (e) => {
+  const sortBy = e.target.value;
+  let sortedStudents = [...students];
+
+  if (sortBy === 'name') {
+    sortedStudents.sort((a, b) => a.name.localeCompare(b.name));
   }
-  students.push(student)
-  console.log(studentId,studentGrade,studentName,studentSubject)
-  const tr = document.createElement('tr')
-  tr.innerHTML = `<td>${student.id}</td>
-          <td>${student.name}</td>
-          <td>${student.subject}</td>
-          <td>${student.grade}</td>
-          <td class="action-cell">
-            <i class="fas fa-edit edit-icon"></i>
-            <i class="delete fas fa-trash delete-icon"></i>
-          </td>`
-          
-          studentsContainer.appendChild(tr)
-  document.getElementById('addStudentForm').reset()
-})
 
+  if (sortBy === 'id') {
+    sortedStudents.sort((a, b) => parseInt(a.id.slice(1)) - parseInt(b.id.slice(1)));
+  }
 
+  if (sortBy === 'grade') {
+    const gradeOrder = ['A+', 'A', 'B', 'C', 'Fail'];
+    sortedStudents.sort((a, b) =>
+      gradeOrder.indexOf(a.grade) - gradeOrder.indexOf(b.grade)
+    );
+  }
+
+  showAllStudents(sortedStudents);
+});
+
+//  Action Icons (Edit/Delete)
+studentsContainer.addEventListener('click', (e) => {
+  const clicked = e.target;
+  if (clicked.classList.contains('edit-icon')) {
+    editStudentInfo(clicked);
+  }
+  if (clicked.classList.contains('delete-icon')) {
+    deleteStudentInfo(clicked);
+  }
+});
+
+//  Initial Render
+showAllStudents(students);
